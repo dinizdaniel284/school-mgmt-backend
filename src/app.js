@@ -7,11 +7,15 @@ const { errorHandler } = require("./middlewares/error-handler.js");
 
 const app = express();
 
-// 🦊 TRUQUE DO MOTORISTA: CORS configurado para aceitar credenciais e liberar o seu localhost!
+// 🦊 TRUQUE DO MOTORISTA: CORS liberando Localhost E a sua nova URL oficial da Vercel!
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
-    credentials: true,
+    origin: [
+      "http://localhost:5173", 
+      "http://127.0.0.1:5173",
+      "https://school-management-frontend-henna.vercel.app" // 👈 Seu link oficial da Vercel injetado!
+    ],
+    credentials: true, // Mantém a conexão segura ativa para cookies e headers
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"]
   })
