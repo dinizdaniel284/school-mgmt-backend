@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const { routes } = require("./routes/v1.js"); // 👈 AJUSTADO! Apontando direto para o v1.js sem errar o caminho no Linux!
-const { errorHandler } = require("./middlewares/error-handler.js");
+const { routes } = require("./routes/v1.js"); 
+const { errorHandler } = require("./middleware/error-handler.js"); 
 
-const app = report_unused_disable_directives = express();
+const app = express();
 
 // 🦊 TRUQUE DO MOTORISTA: CORS liberando Localhost E a sua nova URL oficial da Vercel!
 app.use(
@@ -13,9 +13,9 @@ app.use(
     origin: [
       "http://localhost:5173", 
       "http://127.0.0.1:5173",
-      "https://school-management-frontend-henna.vercel.app" // Seu link oficial da Vercel injetado!
+      "https://school-management-frontend-henna.vercel.app" 
     ],
-    credentials: true, // Mantém a conexão segura ativa para cookies e headers
+    credentials: true, 
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"]
   })
