@@ -2,12 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const { routes } = require("./routes/v1.js"); 
 
-// 🎯 IMPORT SEGURO: Importamos o módulo bruto
+// 🎯 AJUSTE DAS ROTAS: Importa o módulo bruto direto para evitar o 'undefined'
+const routesModule = require("./routes/v1.js"); 
+const routes = typeof routesModule === "function" || routesModule.use ? routesModule : (routesModule.routes || Object.values(routesModule)[0]);
+
+// 🎯 AJUSTE DO MIDDLEWARE DE ERRO: Importa direto também
 const errorModule = require("./middlewares/handle-global-error.js"); 
-
-// 🧠 TRUQUE DE SEGURANÇA: Se for uma função, usa ela. Se for um objeto, tenta pegar a propriedade de dentro!
 const handleGlobalError = typeof errorModule === "function" 
   ? errorModule 
   : (errorModule.handleGlobalError || errorModule.errorHandler || Object.values(errorModule)[0]);
@@ -33,14 +34,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
 
-// Rotas da API
-app.use("/api/v1", routes);
+// Rotas da API (Garantindo que nunca vá um undefined)
+if (routes) {
+  app.use("/api/v1", routes);
+} else {
+  console.error("⚠️ Erro crítico: Módulo de rotas não pôde ser carregado.");
+}
 
-// Middleware global de erros (Garantindo que nunca vá um undefined para o Express)
+// Middleware global de erros
 if (handleGlobalError && typeof handleGlobalError === "function") {
   app.use(handleGlobalError);
 } else {
-  // Se tudo falhar, injetamos um middleware reserva na hora para o servidor NÃO crashar!
   app.use((err, req, res, next) => {
     console.error("Erro capturado no fallback:", err);
     res.status(500).json({ message: err.message || "Internal Server Error" });
