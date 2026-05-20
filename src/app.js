@@ -3,7 +3,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const { routes } = require("./routes/v1.js"); 
-const { errorHandler } = require("./middleware/error-handler.js"); 
+// 🎯 CORRIGIDO: Apontando para o arquivo real 'handle-global-error.js' dentro de 'middlewares' (com s)!
+const { handleGlobalError } = require("./middlewares/handle-global-error.js"); 
 
 const app = express();
 
@@ -30,6 +31,6 @@ app.use(morgan("dev"));
 app.use("/api/v1", routes);
 
 // Middleware global de erros (sempre por último)
-app.use(errorHandler);
+app.use(handleGlobalError); // 👈 Atualizado aqui também!
 
 module.exports = { app };
