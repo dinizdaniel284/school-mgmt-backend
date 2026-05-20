@@ -1,22 +1,31 @@
 const express = require("express");
-const cookieParser = require("cookie-parser"); 
-const cors = require("cors"); // 1. Mudamos para puxar o pacote padrão do CORS
-const dotenv = require("dotenv");
-dotenv.config();
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const { routes } = require("./routes");
+const { errorHandler } = require("./middlewares/error-handler.js");
 
-const { handle404Error, handleGlobalError } = require("./middlewares");
-const { v1Routes } = require("./routes/v1");
-const path = require("path");
 const app = express();
 
-app.use(cors()); // 2. Agora executando como função () para liberar o frontend!
+// 🦊 TRUQUE DO MOTORISTA: CORS configurado para aceitar credenciais e liberar o seu localhost!
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"]
+  })
+);
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(morgan("dev"));
 
-app.use("/api/v1", v1Routes);
+// Rotas da API
+app.use("/api/v1", routes);
 
-app.use(handle404Error);
-app.use(handleGlobalError);
+// Middleware global de erros (sempre por último)
+app.use(errorHandler);
 
 module.exports = { app };
