@@ -3,8 +3,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const { routes } = require("./routes/v1.js"); 
-// 🎯 CORRIGIDO: Apontando para o arquivo real 'handle-global-error.js' dentro de 'middlewares' (com s)!
-const { handleGlobalError } = require("./middlewares/handle-global-error.js"); 
+// 🎯 AJUSTADO: Importando direto para evitar o erro de 'undefined' no Express!
+const handleGlobalError = require("./middlewares/handle-global-error.js"); 
 
 const app = express();
 
@@ -31,6 +31,6 @@ app.use(morgan("dev"));
 app.use("/api/v1", routes);
 
 // Middleware global de erros (sempre por último)
-app.use(handleGlobalError); // 👈 Atualizado aqui também!
+app.use(handleGlobalError); 
 
 module.exports = { app };
