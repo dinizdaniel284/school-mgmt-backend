@@ -5,17 +5,18 @@ const { app } = require("./app.js");
 const { env } = require("./config");
 const cors = require("cors");
 
-// Usa a porta do .env, e se por acaso falhar, joga a 5007 como garantia
-const PORT = env.PORT || 5007; 
+// 🚀 Lendo a porta do Render direto, ou o env customizado, ou a 5007 local
+const PORT = process.env.PORT || env.PORT || 5007; 
 
-// 🦊 TRUQUE DE MESTRE: Configuração cirúrgica do CORS para matar o erro do Chrome
+// 🦊 Configuração do CORS atualizada com o link oficial da Vercel
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", // Seu Frontend rodando local no Vite
-      "http://127.0.0.1:5173"  // IP padrão do localhost caso o navegador mude a rota
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "https://school-management-frontend-henna.vercel.app"
     ],
-    credentials: true, // Permite o tráfego seguro de cookies/headers que o RTK Query exige
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"]
   })
