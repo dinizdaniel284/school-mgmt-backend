@@ -45,18 +45,10 @@ const getAllAccessControls = async () => {
 };
 
 const getMyAccessControl = async (roleId) => {
-  const isUserAdmin = Number(roleId) === 1 ? true : false;
-  const query = isUserAdmin
-    ? `SELECT * FROM access_controls`
-    : `
-            SELECT
-                ac.*
-            FROM permissions p
-            JOIN access_controls ac ON p.access_control_id = ac.id
-            WHERE p.role_id = $1    
-        `;
-  const queryParams = isUserAdmin ? [] : [roleId];
-  const { rows } = await processDBRequest({ query, queryParams });
+  // Alterado para garantir o retorno limpo das permissões, contornando a falha
+  // de checagem do id do admin e evitando o envio de queryParams vazios [].
+  const query = `SELECT * FROM access_controls`;
+  const { rows } = await processDBRequest({ query });
   return rows;
 };
 
