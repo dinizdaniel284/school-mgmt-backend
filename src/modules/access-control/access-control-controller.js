@@ -30,32 +30,29 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Injetando os caminhos contendo o prefixo `/app` mapeado da URL
-    // e adicionando campos extras para garantir a renderização no React
+    // Retornando a estrutura de menus contendo o mapeamento exato das rotas filhas
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/dashboard", // Alinhado com o padrão Next.js do print
+          path: "/app", // Alinha com o /app direto da barra de endereço
           slug: "dashboard",
           type: "MENU",
           method: "GET",
           icon: "dashboard",
           hierarchy_id: 1,
-          parent_path: null,
           children: []
         },
         {
           id: 2,
           name: "Users",
-          path: "/app/users", // Rota filha dentro do subdiretório /app
+          path: "/app/users",
           slug: "users",
           type: "MENU",
           method: "GET",
           icon: "users",
           hierarchy_id: 2,
-          parent_path: null,
           children: []
         }
       ],
