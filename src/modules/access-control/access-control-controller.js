@@ -30,16 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Alinhado para que a concatenação forçada do frontend busque o asset estático na raiz
-    const safeIconFile = "icon.png";
-
     const permissionsData = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
           path: "dashboard",
-          icon: safeIconFile, 
+          icon: "LayoutDashboard", // String limpa de componente de ícone (Padrão de mercado)
           hierarchy_id: 1,
           parentId: null,
           is_active: true
@@ -48,7 +45,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
           id: 2,
           name: "Classes",
           path: "classes",
-          icon: safeIconFile, 
+          icon: "School", // String limpa de componente de ícone (Padrão de mercado)
           hierarchy_id: 2,
           parentId: null,
           is_active: true
@@ -65,6 +62,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ]
     };
 
+    // Resposta ultra-blindada e espelhada para o RTK Query ler sem sofrer
     res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
