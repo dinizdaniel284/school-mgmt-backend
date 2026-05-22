@@ -30,13 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Rotas limpas padrão para SPAs em Vite/React Router
+    // Alinhando os paths com o layout interno do React Router (/app/dashboard e /app/users)
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/dashboard", 
+          path: "/app/dashboard", 
           slug: "dashboard",
           type: "MENU",
           method: "GET",
@@ -47,7 +47,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Users",
-          path: "/users",
+          path: "/app/users",
           slug: "users",
           type: "MENU",
           method: "GET",
