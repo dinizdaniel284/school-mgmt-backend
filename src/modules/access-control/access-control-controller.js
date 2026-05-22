@@ -35,7 +35,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 1,
           name: "Dashboard",
-          path: "/dashboard",   // 🎯 Variação com barra absoluta inicial! 
+          path: "/app/dashboard",   // 🎯 O ALVO REAL: Batendo de frente com a URL exata do front gringo!
           icon: "dashboard",      
           hierarchy_id: 1,
           parentId: null,
@@ -44,7 +44,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "/classes",     // 🎯 Variação com barra absoluta inicial!
+          path: "/app/classes",     // 🎯 O ALVO REAL: Batendo de frente com a URL exata do front gringo!
           icon: "school",         
           hierarchy_id: 2,
           parentId: null,
