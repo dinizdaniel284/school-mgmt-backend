@@ -30,17 +30,15 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // RESPOSTA BLINDADA BASEADA NA ANÁLISE COMPLETA DAS DUAS IAs
+    // Configuração ajustada com barras iniciais (/dashboard) atendendo à análise das IAs
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          // Fornecendo caminhos relativos e absolutos para neutralizar concatenações erradas
-          path: "dashboard", 
+          path: "/dashboard", // Adicionada a barra inicial para bater com o resolvedor do front
           fullPath: "/app/dashboard",
           route: "dashboard",
-          // Blindagem de enums e mapeamentos de permissão
           slug: "dashboard",
           permission: "dashboard",
           resource: "dashboard",
@@ -52,12 +50,12 @@ const handleGetMyAccessControl = async (req, res, next) => {
           parentId: null,
           is_active: true,
           visible: true,
-          children: [] // Mantido como array vazio padrão
+          children: []
         },
         {
           id: 2,
           name: "Classes",
-          path: "classes",
+          path: "/classes", // Adicionada a barra inicial para bater com o resolvedor do front
           fullPath: "/app/classes",
           route: "classes",
           slug: "classes",
