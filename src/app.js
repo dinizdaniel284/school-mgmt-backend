@@ -24,7 +24,7 @@ app.use(
       "https://school-management-frontend-henna.vercel.app" 
     ],
     credentials: true, 
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
     allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"]
   })
 );
@@ -33,6 +33,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
+
+// 👑 VACINA DA ROTA RAIZ (TESTE DE SAÚDE DA API):
+// Quando o frontend der um HEAD ou GET na raiz (/), respondemos com 200 OK instantâneo!
+app.all("/", (req, res) => {
+  return res.status(200).json({
+    success: true,
+    message: "Server is healthy and running.",
+    environment: "test-bypass"
+  });
+});
 
 // Rotas da API (Garantindo que nunca vá um undefined)
 if (routes) {
