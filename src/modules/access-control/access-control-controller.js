@@ -35,7 +35,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/dashboard",   // 🎯 O ALVO REAL: Batendo de frente com a URL exata do front gringo!
+          path: "/app/dashboard",   // Rota absoluta padrão de dashboards React
           icon: "dashboard",      
           hierarchy_id: 1,
           parentId: null,
@@ -44,7 +44,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "/app/classes",     // 🎯 O ALVO REAL: Batendo de frente com a URL exata do front gringo!
+          path: "/app/class",       // Ajustado para o singular caso o template gringo mapeie assim
           icon: "school",         
           hierarchy_id: 2,
           parentId: null,
