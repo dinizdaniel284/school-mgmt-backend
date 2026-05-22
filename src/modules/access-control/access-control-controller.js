@@ -30,14 +30,14 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Sincronização cirúrgica com o arquivo de rotas do Frontend
+    // Forçando caminhos filhos reais para alinhar com o comportamento de redirecionamento dinâmico deles
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app", 
-          slug: "", // Deixado vazio para o frontend não concatenar /app/dashboard incorretamente
+          path: "/app/classes", 
+          slug: "classes",
           type: "MENU",
           method: "GET",
           icon: "dashboard",
