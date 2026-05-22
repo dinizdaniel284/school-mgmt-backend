@@ -35,7 +35,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 1,
           name: "Dashboard",
-          path: "dashboard",   // 🎯 Tentando o path relativo limpo, sem o prefixo /app/
+          path: "/dashboard",   // 🎯 Variação com barra absoluta inicial! 
           icon: "dashboard",      
           hierarchy_id: 1,
           parentId: null,
@@ -44,7 +44,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "classes",     // 🎯 Tentando o path relativo limpo, sem o prefixo /app/
+          path: "/classes",     // 🎯 Variação com barra absoluta inicial!
           icon: "school",         
           hierarchy_id: 2,
           parentId: null,
