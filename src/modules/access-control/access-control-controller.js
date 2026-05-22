@@ -35,8 +35,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/dashboard", // Incluindo o prefixo absoluto do escopo privado do front
-          icon: "LayoutDashboard",
+          path: "/app/dashboard", // Alinha perfeitamente com a URL que o frontend tenta ler
+          icon: "dashboard",      // Bate direto no arquivo 'public/dashboard' sem quebrar o case-sensitive
           hierarchy_id: 1,
           parentId: null,
           is_active: true
@@ -44,8 +44,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "/app/classes", // Incluindo o prefixo absoluto do escopo privado do front
-          icon: "School",
+          path: "/app/classes",   // Alinha perfeitamente com a URL que o frontend tenta ler
+          icon: "school",         // Bate direto no arquivo 'public/school' sem quebrar o case-sensitive
           hierarchy_id: 2,
           parentId: null,
           is_active: true
@@ -62,6 +62,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ]
     };
 
+    // Resposta estruturada em formato híbrido para blindar contra qualquer expectativa do RTK Query
     res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
