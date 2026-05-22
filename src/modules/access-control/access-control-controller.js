@@ -30,39 +30,43 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Configuração limpa batendo direto com o routes.tsx do Frontend
+    // Configuração robusta batendo direto com as rotas reais do Frontend
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app", // Rota index do frontend
+          path: "/app",
           slug: "dashboard",
           type: "MENU",
           method: "GET",
-          icon: "dashboard",
+          icon: "LayoutDashboard",
           hierarchy_id: 1,
+          parentId: null,
+          is_active: true,
           children: []
         },
         {
           id: 2,
-          name: "Classes", 
-          path: "/app/classes", // Rota filha real
+          name: "Classes",
+          path: "/app/classes",
           slug: "classes",
           type: "MENU",
           method: "GET",
-          icon: "users",
+          icon: "School",
           hierarchy_id: 2,
+          parentId: null,
+          is_active: true,
           children: []
         }
       ],
       apis: [
-        "GET /api/v1/dashboard", 
-        "GET /api/v1/classes", 
+        "GET /api/v1/dashboard",
+        "GET /api/v1/classes",
         "GET /api/v1/access-controls/me"
       ],
       uis: [
-        "dashboard-view", 
+        "dashboard-view",
         "classes-view"
       ]
     };
