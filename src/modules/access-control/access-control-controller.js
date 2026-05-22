@@ -30,14 +30,14 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Forçando caminhos filhos reais para alinhar com o comportamento de redirecionamento dinâmico deles
+    // Configuração limpa batendo direto com o routes.tsx do Frontend
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/classes", 
-          slug: "classes",
+          path: "/app", // Rota index do frontend
+          slug: "dashboard",
           type: "MENU",
           method: "GET",
           icon: "dashboard",
@@ -47,7 +47,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes", 
-          path: "/app/classes", 
+          path: "/app/classes", // Rota filha real
           slug: "classes",
           type: "MENU",
           method: "GET",
