@@ -30,12 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
+    // 🎯 O Objeto estruturado exatamente como o front gringo mapeia internamente
     const permissionsData = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/dashboard", // Caminho padrão absoluto do layout
+          path: "/app/dashboard",
           icon: "dashboard",      
           hierarchy_id: 1,
           parentId: null,
@@ -44,7 +45,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "/app/classes",   // Mantendo a estrutura padrão do menu lateral
+          path: "/app/classes",
           icon: "school",         
           hierarchy_id: 2,
           parentId: null,
@@ -54,35 +55,24 @@ const handleGetMyAccessControl = async (req, res, next) => {
       apis: [
         "GET /api/v1/dashboard",
         "GET /api/v1/classes",
-        "GET /api/v1/access-controls/me",
-        "dashboard",
-        "classes"
+        "GET /api/v1/access-controls/me"
       ],
-      // 🎯 METRALHADORA DE PERMISSÕES: Injetando todas as palavras-chave padrão para destravar views
       uis: [
         "dashboard-view",
         "classes-view",
         "dashboard",
-        "classes",
-        "admin",
-        "admin-dashboard",
-        "view-dashboard",
-        "view-classes",
-        "read:dashboard",
-        "read:classes",
-        "Dashboard",
-        "Classes"
+        "classes"
       ]
     };
 
-    res.status(200).json({
-      success: true,
-      message: "Permissions fetched successfully.",
+    // 👑 SE ENCAIXAR NO PADRÃO AXIOS (response.data.permissions) OU DIRETO NA RAIZ
+    return res.status(200).json({
       permissions: permissionsData,
-      data: {
-        permissions: permissionsData
-      }
+      menus: permissionsData.menus,
+      apis: permissionsData.apis,
+      uis: permissionsData.uis
     });
+
   } catch (error) {
     next(error);
   }
