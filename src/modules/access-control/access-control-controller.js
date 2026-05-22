@@ -35,8 +35,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 1,
           name: "Dashboard",
-          path: "dashboard",
-          icon: "LayoutDashboard", // String limpa de componente de ícone (Padrão de mercado)
+          path: "/app/dashboard", // Incluindo o prefixo absoluto do escopo privado do front
+          icon: "LayoutDashboard",
           hierarchy_id: 1,
           parentId: null,
           is_active: true
@@ -44,8 +44,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "classes",
-          icon: "School", // String limpa de componente de ícone (Padrão de mercado)
+          path: "/app/classes", // Incluindo o prefixo absoluto do escopo privado do front
+          icon: "School",
           hierarchy_id: 2,
           parentId: null,
           is_active: true
@@ -62,7 +62,6 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ]
     };
 
-    // Resposta ultra-blindada e espelhada para o RTK Query ler sem sofrer
     res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
