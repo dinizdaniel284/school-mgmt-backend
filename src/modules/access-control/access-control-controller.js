@@ -30,33 +30,47 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Configuração robusta batendo direto com as rotas reais do Frontend
+    // RESPOSTA BLINDADA BASEADA NA ANÁLISE COMPLETA DAS DUAS IAs
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app",
+          // Fornecendo caminhos relativos e absolutos para neutralizar concatenações erradas
+          path: "dashboard", 
+          fullPath: "/app/dashboard",
+          route: "dashboard",
+          // Blindagem de enums e mapeamentos de permissão
           slug: "dashboard",
+          permission: "dashboard",
+          resource: "dashboard",
           type: "MENU",
-          method: "GET",
+          role: "ADMIN",
           icon: "LayoutDashboard",
           hierarchy_id: 1,
+          order: 1,
           parentId: null,
           is_active: true,
-          children: []
+          visible: true,
+          children: [] // Mantido como array vazio padrão
         },
         {
           id: 2,
           name: "Classes",
-          path: "/app/classes",
+          path: "classes",
+          fullPath: "/app/classes",
+          route: "classes",
           slug: "classes",
+          permission: "classes",
+          resource: "classes",
           type: "MENU",
-          method: "GET",
+          role: "ADMIN",
           icon: "School",
           hierarchy_id: 2,
+          order: 2,
           parentId: null,
           is_active: true,
+          visible: true,
           children: []
         }
       ],
