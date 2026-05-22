@@ -30,13 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Alinhando os paths com o layout interno do React Router (/app/dashboard e /app/users)
+    // Sincronizado perfeitamente com o arquivo routes.tsx do Frontend
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/dashboard", 
+          path: "/app", // Mapeado como /app por ser a rota index: true do frontend
           slug: "dashboard",
           type: "MENU",
           method: "GET",
@@ -46,9 +46,9 @@ const handleGetMyAccessControl = async (req, res, next) => {
         },
         {
           id: 2,
-          name: "Users",
-          path: "/app/users",
-          slug: "users",
+          name: "Classes", // Alterado de Users para Classes para bater com a rota real deles
+          path: "/app/classes", // Bate exatamente com o { path: 'classes' } filho de /app
+          slug: "classes",
           type: "MENU",
           method: "GET",
           icon: "users",
@@ -58,12 +58,12 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ],
       apis: [
         "GET /api/v1/dashboard", 
-        "GET /api/v1/users", 
+        "GET /api/v1/classes", 
         "GET /api/v1/access-controls/me"
       ],
       uis: [
         "dashboard-view", 
-        "users-view"
+        "classes-view"
       ]
     };
 
