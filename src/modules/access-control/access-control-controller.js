@@ -30,13 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Configuração com o caminho absoluto completo (/app/dashboard) para bater direto com a URL do navegador
+    // Retornando a string idêntica extraída pelo matchedRoute[1].route.path do frontend
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/dashboard", // Casando idêntico com a URL final do navegador (Teste C)
+          path: "dashboard", // String pura relativa para bater com o layout gringo
           fullPath: "/app/dashboard",
           route: "dashboard",
           slug: "dashboard",
@@ -55,7 +55,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "/app/classes", // Casando idêntico com a URL final do navegador (Teste C)
+          path: "classes", // String pura relativa para bater com o layout gringo
           fullPath: "/app/classes",
           route: "classes",
           slug: "classes",
