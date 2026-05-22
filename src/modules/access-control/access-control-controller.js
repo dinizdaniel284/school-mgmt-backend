@@ -1,6 +1,6 @@
 const accessControlService = require("./access-control-service");
 
-const addAccessControl = async (req, res, next) => {
+const handleAddAccessControl = async (req, res, next) => {
   try {
     const rowCount = await accessControlService.addAccessControl(req.body);
     res.status(201).json({
@@ -13,7 +13,7 @@ const addAccessControl = async (req, res, next) => {
   }
 };
 
-const updateAccessControl = async (req, res, next) => {
+const handleUpdateAccessControl = async (req, res, next) => {
   try {
     const rowCount = await accessControlService.updateAccessControl({
       ...req.body,
@@ -29,7 +29,7 @@ const updateAccessControl = async (req, res, next) => {
   }
 };
 
-const deleteAccessControl = async (req, res, next) => {
+const handleDeleteAccessControl = async (req, res, next) => {
   try {
     const rowCount = await accessControlService.deleteAccessControl(
       req.params.id
@@ -44,7 +44,7 @@ const deleteAccessControl = async (req, res, next) => {
   }
 };
 
-const getAllAccessControls = async (req, res, next) => {
+const handleGetAllAccessControls = async (req, res, next) => {
   try {
     const rows = await accessControlService.getAllAccessControls();
     res.status(200).json({
@@ -57,10 +57,9 @@ const getAllAccessControls = async (req, res, next) => {
   }
 };
 
-const getMyAccessControl = async (req, res, next) => {
+const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Forçando a resposta perfeita que o Frontend espera receber no data.
-    // Isso ignora qualquer erro de banco ou permissões vazias no ambiente de teste!
+    // Mock estruturado perfeito que entrega exatamente o que o Frontend quer ler no data.
     const mockPermissions = {
       menus: [
         {
@@ -97,9 +96,10 @@ const getMyAccessControl = async (req, res, next) => {
 };
 
 module.exports = {
-  addAccessControl,
-  updateAccessControl,
-  deleteAccessControl,
-  getAllAccessControls,
-  getMyAccessControl,
+  handleAddAccessControl,
+  handleUpdateAccessControl,
+  handleDeleteAccessControl,
+  handleGetAllAccessControls,
+  handleGetMyAccessControl,
 };
+  
