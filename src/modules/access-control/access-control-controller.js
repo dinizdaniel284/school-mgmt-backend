@@ -30,46 +30,48 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // CORREÇÃO DETECTADA NO HOOK: O objeto de permissões precisa estar aninhado em 'permissions'!
-    const mockPayload = {
-      permissions: {
-        menus: [
-          {
-            id: 1,
-            name: "Dashboard",
-            path: "dashboard", // String relativa exata obtida pelo matchRoutes do frontend
-            icon: "LayoutDashboard",
-            hierarchy_id: 1,
-            parentId: null,
-            is_active: true
-          },
-          {
-            id: 2,
-            name: "Classes",
-            path: "classes", // String relativa exata obtida pelo matchRoutes do frontend
-            icon: "School",
-            hierarchy_id: 2,
-            parentId: null,
-            is_active: true
-          }
-        ],
-        apis: [
-          "GET /api/v1/dashboard",
-          "GET /api/v1/classes",
-          "GET /api/v1/access-controls/me"
-        ],
-        uis: [
-          "dashboard-view",
-          "classes-view"
-        ]
-      }
+    // Estrutura interna pura que o Redux precisa injetar no estado global
+    const permissionsData = {
+      menus: [
+        {
+          id: 1,
+          name: "Dashboard",
+          path: "dashboard", // Alinhado com o matchRoutes do front
+          icon: "LayoutDashboard",
+          hierarchy_id: 1,
+          parentId: null,
+          is_active: true
+        },
+        {
+          id: 2,
+          name: "Classes",
+          path: "classes",
+          icon: "School",
+          hierarchy_id: 2,
+          parentId: null,
+          is_active: true
+        }
+      ],
+      apis: [
+        "GET /api/v1/dashboard",
+        "GET /api/v1/classes",
+        "GET /api/v1/access-controls/me"
+      ],
+      uis: [
+        "dashboard-view",
+        "classes-view"
+      ]
     };
 
-    // Resposta envelopada no padrão estrito esperado pelo RTK Query / Redux do frontend gringo
+    // BLINDAGEM MESTRA: Não importa se o RTK Query lê da raiz ou do nó .data,
+    // ele vai encontrar a chave 'permissions' de qualquer jeito!
     res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
-      data: mockPayload, // Quando o front ler 'data', vai encontrar '.permissions.menus' dentro!
+      permissions: permissionsData, // Caso o front leia da raiz pura do payload
+      data: {
+        permissions: permissionsData // Caso o front leia de dentro do nó .data
+      }
     });
   } catch (error) {
     next(error);
