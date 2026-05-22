@@ -30,14 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Estrutura interna pura que o Redux precisa injetar no estado global
     const permissionsData = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "dashboard", // Alinhado com o matchRoutes do front
-          icon: "LayoutDashboard",
+          path: "dashboard", // String relativa para casar com o matchRoutes
+          icon: "", // Zerado para impedir o fetch que dava 404 no console
           hierarchy_id: 1,
           parentId: null,
           is_active: true
@@ -45,8 +44,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "classes",
-          icon: "School",
+          path: "classes", // String relativa para casar com o matchRoutes
+          icon: "", // Zerado para impedir o fetch que dava 404 no console
           hierarchy_id: 2,
           parentId: null,
           is_active: true
@@ -63,14 +62,13 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ]
     };
 
-    // BLINDAGEM MESTRA: Não importa se o RTK Query lê da raiz ou do nó .data,
-    // ele vai encontrar a chave 'permissions' de qualquer jeito!
+    // Resposta com blindagem dupla de nós (funciona se o RTK ler da raiz ou de .data)
     res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
-      permissions: permissionsData, // Caso o front leia da raiz pura do payload
+      permissions: permissionsData,
       data: {
-        permissions: permissionsData // Caso o front leia de dentro do nó .data
+        permissions: permissionsData
       }
     });
   } catch (error) {
