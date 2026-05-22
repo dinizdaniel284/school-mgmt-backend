@@ -30,13 +30,16 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Remoção radical de propriedades que geram fetches fantasmas no frontend
+    // Usando um placeholder de imagem com CORS totalmente aberto para matar o erro de carregamento do front
+    const safeIconPlaceholder = "https://placeholder.co/24";
+
     const permissionsData = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "dashboard", // Match exato com matchRoutes
+          path: "dashboard",
+          icon: safeIconPlaceholder, // Evita string vazia e mata o 'undefined'
           hierarchy_id: 1,
           parentId: null,
           is_active: true
@@ -44,7 +47,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "classes", // Match exato com matchRoutes
+          path: "classes",
+          icon: safeIconPlaceholder, // Evita string vazia e mata o 'undefined'
           hierarchy_id: 2,
           parentId: null,
           is_active: true
@@ -61,7 +65,6 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ]
     };
 
-    // Resposta espelhada nas duas estruturas para matar qualquer erro do interceptor do front
     res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
