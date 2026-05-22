@@ -26,27 +26,32 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(helmet({
-  crossOriginResourcePolicy: false, // Permite que o front leia os assets
+  crossOriginResourcePolicy: false, // Permite que o front carregue imagens de outro domínio de boa
 }));
+
 app.use(morgan("dev"));
 
-// 🎯 MIDDLEWARE SALVA-VIDAS: Se o Linux pedir maiúscula, ele entrega o arquivo minúsculo!
+// 🎯 INTERCEPTADOR MÁGICO: Resolve a bagunça de maiúsculas/minúsculas dos SVGs
 app.use((req, res, next) => {
-  const ext = path.extname(req.path).toLowerCase();
-  if (ext === ".svg" || ext === ".png" || ext === ".jpg") {
-    const filename = path.basename(req.path).toLowerCase(); // dashboard.svg
-    const localPath = path.join(__dirname, "../public", filename);
-    
-    if (fs.existsSync(localPath)) {
-      res.setHeader("Content-Type", "image/svg+xml");
-      return res.sendFile(localPath);
-    }
+  const parsedPath = path.parse(req.path);
+  const lowerName = parsedPath.name.toLowerCase(); // vira 'school' ou 'dashboard'
+  
+  // Caminhos prováveis onde o arquivo físico minúsculo pode estar com ou sem a extensão .svg
+  const fileWithSvg = path.join(__dirname, "../public", `${lowerName}.svg`);
+  const fileDirect = path.join(__dirname, "../public", lowerName);
+
+  if (fs.existsSync(fileWithSvg)) {
+    res.setHeader("Content-Type", "image/svg+xml");
+    return res.sendFile(fileWithSvg);
+  } else if (fs.existsSync(fileDirect)) {
+    res.setHeader("Content-Type", "image/svg+xml");
+    return res.sendFile(fileDirect);
   }
   next();
 });
 
-// Servidor estático padrão
 app.use(express.static(path.join(__dirname, "../public")));
 
 app.all("/", (req, res) => {

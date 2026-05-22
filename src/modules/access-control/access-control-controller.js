@@ -36,7 +36,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
           id: 1,
           name: "Dashboard",
           path: "/app/dashboard",
-          icon: "dashboard",      
+          icon: "Dashboard",     // 🎯 Capitalizado com 'D' maiúsculo como o front pede!
           hierarchy_id: 1,
           parentId: null,
           is_active: true
@@ -45,7 +45,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
           id: 2,
           name: "Classes",
           path: "/app/classes",
-          icon: "school",         
+          icon: "School",        // 🎯 Capitalizado com 'S' maiúsculo como o front pede!
           hierarchy_id: 2,
           parentId: null,
           is_active: true
@@ -64,14 +64,14 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ]
     };
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
+      permissions: permissionsData,
       data: {
         permissions: permissionsData
       }
     });
-
   } catch (error) {
     next(error);
   }
