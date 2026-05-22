@@ -30,7 +30,7 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Retornando caminhos limpos padronizados de Next.js, agora que a API está respondendo 200 OK na raiz
+    // Rotas limpas padrão para SPAs em Vite/React Router
     const mockPermissions = {
       menus: [
         {
