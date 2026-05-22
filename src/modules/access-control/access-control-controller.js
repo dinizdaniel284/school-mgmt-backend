@@ -30,13 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Configuração ajustada com barras iniciais (/dashboard) atendendo à análise das IAs
+    // Configuração com o caminho absoluto completo (/app/dashboard) para bater direto com a URL do navegador
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/dashboard", // Adicionada a barra inicial para bater com o resolvedor do front
+          path: "/app/dashboard", // Casando idêntico com a URL final do navegador (Teste C)
           fullPath: "/app/dashboard",
           route: "dashboard",
           slug: "dashboard",
@@ -55,7 +55,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "/classes", // Adicionada a barra inicial para bater com o resolvedor do front
+          path: "/app/classes", // Casando idêntico com a URL final do navegador (Teste C)
           fullPath: "/app/classes",
           route: "classes",
           slug: "classes",
