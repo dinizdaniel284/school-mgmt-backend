@@ -34,6 +34,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
 
+// 👑 TRUQUE DO PIXEL TRANSPARENTE: Calando de vez as requisições fantasmas de ícone do frontend!
+// O front concatena a URL base com 'icon.png'. Capturamos aqui e entregamos uma imagem real de 1x1.
+app.get('/icon.png', (req, res) => {
+  const buf = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
+  res.writeHead(200, {
+    'Content-Type': 'image/gif',
+    'Content-Length': buf.length,
+    'Access-Control-Allow-Origin': '*', // Escancarado para burlar a trava SameOrigin do navegador
+    'Access-Control-Allow-Methods': 'GET, OPTIONS'
+  });
+  res.end(buf);
+});
+
 // 👑 VACINA DA ROTA RAIZ (TESTE DE SAÚDE DA API):
 // Quando o frontend der um HEAD ou GET na raiz (/), respondemos com 200 OK instantâneo!
 app.all("/", (req, res) => {
