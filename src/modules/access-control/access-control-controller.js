@@ -59,13 +59,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Mock estruturado perfeito que entrega exatamente o que o Frontend quer ler no data.
+    // Mock estruturado ajustado com caminhos raiz e admin para o Frontend renderizar a página correta
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/dashboard",
+          path: "/", // Testa a raiz do projeto do frontend
           type: "MENU",
           method: "GET",
           hierarchy_id: 1,
@@ -73,8 +73,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         },
         {
           id: 2,
-          name: "Users",
-          path: "/users",
+          name: "Overview",
+          path: "/admin", // Rota muito comum usada em templates de painel admin gringos
           type: "MENU",
           method: "GET",
           hierarchy_id: 2,
@@ -102,4 +102,3 @@ module.exports = {
   handleGetAllAccessControls,
   handleGetMyAccessControl,
 };
-  
