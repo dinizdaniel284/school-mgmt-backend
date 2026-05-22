@@ -2,12 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const path = require("path");
 
-// 🎯 AJUSTE DAS ROTAS: Importa o módulo bruto direto para evitar o 'undefined'
 const routesModule = require("./routes/v1.js"); 
 const routes = typeof routesModule === "function" || routesModule.use ? routesModule : (routesModule.routes || Object.values(routesModule)[0]);
 
-// 🎯 AJUSTE DO MIDDLEWARE DE ERRO: Importa direto também
 const errorModule = require("./middlewares/handle-global-error.js"); 
 const handleGlobalError = typeof errorModule === "function" 
   ? errorModule 
@@ -15,7 +14,6 @@ const handleGlobalError = typeof errorModule === "function"
 
 const app = express();
 
-// 🦊 TRUQUE DO MOTORISTA: CORS liberando Localhost E a sua nova URL oficial da Vercel!
 app.use(
   cors({
     origin: [
@@ -31,24 +29,34 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: false, // Libera assets para o front gringo
+}));
 app.use(morgan("dev"));
 
-// 👑 TRUQUE DO PIXEL TRANSPARENTE: Calando de vez as requisições fantasmas de ícone do frontend!
-// O front concatena a URL base com 'icon.png'. Capturamos aqui e entregamos uma imagem real de 1x1.
-app.get('/icon.png', (req, res) => {
-  const buf = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
-  res.writeHead(200, {
-    'Content-Type': 'image/gif',
-    'Content-Length': buf.length,
-    'Access-Control-Allow-Origin': '*', // Escancarado para burlar a trava SameOrigin do navegador
-    'Access-Control-Allow-Methods': 'GET, OPTIONS'
-  });
-  res.end(buf);
+// 👑 VACINA INJECT: Rotas explícitas para os ícones em minúsculo limparem o console do front!
+app.get("/dashboard", (req, res) => {
+  res.setHeader("Content-Type", "image/svg+xml");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  return res.send(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="10" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/></svg>`);
 });
 
-// 👑 VACINA DA ROTA RAIZ (TESTE DE SAÚDE DA API):
-// Quando o frontend der um HEAD ou GET na raiz (/), respondemos com 200 OK instantâneo!
+app.get("/school", (req, res) => {
+  res.setHeader("Content-Type", "image/svg+xml");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  return res.send(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`);
+});
+
+// Fallback para a pasta public
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  next();
+}, express.static(path.join(__dirname, "../public")));
+
+// Vacina da rota raiz
 app.all("/", (req, res) => {
   return res.status(200).json({
     success: true,
@@ -57,21 +65,12 @@ app.all("/", (req, res) => {
   });
 });
 
-// Rotas da API (Garantindo que nunca vá um undefined)
 if (routes) {
   app.use("/api/v1", routes);
-} else {
-  console.error("⚠️ Erro crítico: Módulo de rotas não pôde ser carregado.");
 }
 
-// Middleware global de erros
 if (handleGlobalError && typeof handleGlobalError === "function") {
   app.use(handleGlobalError);
-} else {
-  app.use((err, req, res, next) => {
-    console.error("Erro capturado no fallback:", err);
-    res.status(500).json({ message: err.message || "Internal Server Error" });
-  });
 }
 
 module.exports = { app };
