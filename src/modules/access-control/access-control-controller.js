@@ -30,14 +30,14 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Sincronizado perfeitamente com o arquivo routes.tsx do Frontend
+    // Sincronização cirúrgica com o arquivo de rotas do Frontend
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app", // Mapeado como /app por ser a rota index: true do frontend
-          slug: "dashboard",
+          path: "/app", 
+          slug: "", // Deixado vazio para o frontend não concatenar /app/dashboard incorretamente
           type: "MENU",
           method: "GET",
           icon: "dashboard",
@@ -46,8 +46,8 @@ const handleGetMyAccessControl = async (req, res, next) => {
         },
         {
           id: 2,
-          name: "Classes", // Alterado de Users para Classes para bater com a rota real deles
-          path: "/app/classes", // Bate exatamente com o { path: 'classes' } filho de /app
+          name: "Classes", 
+          path: "/app/classes", 
           slug: "classes",
           type: "MENU",
           method: "GET",
