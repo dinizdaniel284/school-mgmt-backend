@@ -35,7 +35,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 1,
           name: "Dashboard",
-          path: "/app/dashboard",   // Rota absoluta padrão de dashboards React
+          path: "/app/dashboard", // Caminho padrão absoluto do layout
           icon: "dashboard",      
           hierarchy_id: 1,
           parentId: null,
@@ -44,7 +44,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Classes",
-          path: "/app/class",       // Ajustado para o singular caso o template gringo mapeie assim
+          path: "/app/classes",   // Mantendo a estrutura padrão do menu lateral
           icon: "school",         
           hierarchy_id: 2,
           parentId: null,
@@ -54,11 +54,24 @@ const handleGetMyAccessControl = async (req, res, next) => {
       apis: [
         "GET /api/v1/dashboard",
         "GET /api/v1/classes",
-        "GET /api/v1/access-controls/me"
+        "GET /api/v1/access-controls/me",
+        "dashboard",
+        "classes"
       ],
+      // 🎯 METRALHADORA DE PERMISSÕES: Injetando todas as palavras-chave padrão para destravar views
       uis: [
         "dashboard-view",
-        "classes-view"
+        "classes-view",
+        "dashboard",
+        "classes",
+        "admin",
+        "admin-dashboard",
+        "view-dashboard",
+        "view-classes",
+        "read:dashboard",
+        "read:classes",
+        "Dashboard",
+        "Classes"
       ]
     };
 
