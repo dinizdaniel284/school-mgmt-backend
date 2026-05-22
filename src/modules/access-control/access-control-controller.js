@@ -30,13 +30,13 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Retornando a estrutura de menus contendo o mapeamento exato das rotas filhas
+    // Retornando caminhos limpos padronizados de Next.js, agora que a API está respondendo 200 OK na raiz
     const mockPermissions = {
       menus: [
         {
           id: 1,
           name: "Dashboard",
-          path: "/app", // Alinha com o /app direto da barra de endereço
+          path: "/dashboard", 
           slug: "dashboard",
           type: "MENU",
           method: "GET",
@@ -47,7 +47,7 @@ const handleGetMyAccessControl = async (req, res, next) => {
         {
           id: 2,
           name: "Users",
-          path: "/app/users",
+          path: "/users",
           slug: "users",
           type: "MENU",
           method: "GET",
