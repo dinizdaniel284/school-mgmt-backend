@@ -30,7 +30,6 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // 🎯 O Objeto estruturado exatamente como o front gringo mapeia internamente
     const permissionsData = {
       menus: [
         {
@@ -65,12 +64,12 @@ const handleGetMyAccessControl = async (req, res, next) => {
       ]
     };
 
-    // 👑 SE ENCAIXAR NO PADRÃO AXIOS (response.data.permissions) OU DIRETO NA RAIZ
     return res.status(200).json({
-      permissions: permissionsData,
-      menus: permissionsData.menus,
-      apis: permissionsData.apis,
-      uis: permissionsData.uis
+      success: true,
+      message: "Permissions fetched successfully.",
+      data: {
+        permissions: permissionsData
+      }
     });
 
   } catch (error) {
