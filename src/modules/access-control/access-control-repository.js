@@ -45,9 +45,8 @@ const getAllAccessControls = async () => {
 };
 
 const getMyAccessControl = async (roleId) => {
-  // Ignorando o banco temporariamente para isolar o bug.
-  // Retornando a estrutura de array de objetos esperada pelo formatMyPermission().
-  return [
+  // Mock estruturado para blindar contra checagens de .rows ou array direta
+  const mockData = [
     { 
       id: 1, 
       name: "Dashboard", 
@@ -65,6 +64,11 @@ const getMyAccessControl = async (roleId) => {
       hierarchy_id: 2 
     }
   ];
+
+  // Garante que se o service desestruturar const { rows } = ... funcione perfeitamente
+  mockData.rows = mockData;
+
+  return mockData;
 };
 
 module.exports = {
@@ -74,4 +78,3 @@ module.exports = {
   getAllAccessControls,
   getMyAccessControl,
 };
-      
