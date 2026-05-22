@@ -30,63 +30,46 @@ const handleGetAllAccessControls = async (req, res, next) => {
 
 const handleGetMyAccessControl = async (req, res, next) => {
   try {
-    // Retornando a string idêntica extraída pelo matchedRoute[1].route.path do frontend
-    const mockPermissions = {
-      menus: [
-        {
-          id: 1,
-          name: "Dashboard",
-          path: "dashboard", // String pura relativa para bater com o layout gringo
-          fullPath: "/app/dashboard",
-          route: "dashboard",
-          slug: "dashboard",
-          permission: "dashboard",
-          resource: "dashboard",
-          type: "MENU",
-          role: "ADMIN",
-          icon: "LayoutDashboard",
-          hierarchy_id: 1,
-          order: 1,
-          parentId: null,
-          is_active: true,
-          visible: true,
-          children: []
-        },
-        {
-          id: 2,
-          name: "Classes",
-          path: "classes", // String pura relativa para bater com o layout gringo
-          fullPath: "/app/classes",
-          route: "classes",
-          slug: "classes",
-          permission: "classes",
-          resource: "classes",
-          type: "MENU",
-          role: "ADMIN",
-          icon: "School",
-          hierarchy_id: 2,
-          order: 2,
-          parentId: null,
-          is_active: true,
-          visible: true,
-          children: []
-        }
-      ],
-      apis: [
-        "GET /api/v1/dashboard",
-        "GET /api/v1/classes",
-        "GET /api/v1/access-controls/me"
-      ],
-      uis: [
-        "dashboard-view",
-        "classes-view"
-      ]
+    // CORREÇÃO DETECTADA NO HOOK: O objeto de permissões precisa estar aninhado em 'permissions'!
+    const mockPayload = {
+      permissions: {
+        menus: [
+          {
+            id: 1,
+            name: "Dashboard",
+            path: "dashboard", // String relativa exata obtida pelo matchRoutes do frontend
+            icon: "LayoutDashboard",
+            hierarchy_id: 1,
+            parentId: null,
+            is_active: true
+          },
+          {
+            id: 2,
+            name: "Classes",
+            path: "classes", // String relativa exata obtida pelo matchRoutes do frontend
+            icon: "School",
+            hierarchy_id: 2,
+            parentId: null,
+            is_active: true
+          }
+        ],
+        apis: [
+          "GET /api/v1/dashboard",
+          "GET /api/v1/classes",
+          "GET /api/v1/access-controls/me"
+        ],
+        uis: [
+          "dashboard-view",
+          "classes-view"
+        ]
+      }
     };
 
+    // Resposta envelopada no padrão estrito esperado pelo RTK Query / Redux do frontend gringo
     res.status(200).json({
       success: true,
       message: "Permissions fetched successfully.",
-      data: mockPermissions,
+      data: mockPayload, // Quando o front ler 'data', vai encontrar '.permissions.menus' dentro!
     });
   } catch (error) {
     next(error);
